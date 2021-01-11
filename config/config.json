@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "hubblenews",
+    "password": "vlXTMTBukZu3fEz0",
+    "host": "wondercube.fr",
+    "dialect": "mysql",
+    "databases": {
+      "api": {
+        "path": "hubblenews"
+      }
+    }
+  },
+  "test": {
+    "username": "hubblenews",
+    "password": "vlXTMTBukZu3fEz0",
+    "host": "wondercube.fr",
+    "dialect": "mysql",
+    "databases": {
+      "api": {
+        "path": "hubblenews"
+      }
+    }
+  },
+  "production": {
+    "username": "hubblenews",
+    "password": "vlXTMTBukZu3fEz0",
+    "host": "wondercube.fr",
+    "dialect": "mysql",
+    "databases": {
+      "api": {
+        "path": "hubblenews"
+      }
+    }
+  }
+}
