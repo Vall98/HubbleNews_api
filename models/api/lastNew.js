@@ -1,19 +1,15 @@
 'use strict';
 module.exports = function(sequelize, Sequelize) {
-	var Comment = sequelize.define('comment', {
+	var LastNew = sequelize.define('last_new', {
 		id: {
 			autoIncrement: true,
 			primaryKey: true,
 			type: Sequelize.INTEGER
 		},
-		article_id: {
+		new_id: {
 			type: Sequelize.STRING,
-			allowNull: false
-		},
-		comment: {
-			type: Sequelize.TEXT,
 			allowNull: false
 		}
 	});
-  return Comment;
+  return LastNew;
 };

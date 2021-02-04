@@ -2,22 +2,30 @@ const fs = require('fs');
 var path = require('path');
 const sign = require("../../passport/sign");
 const User = require("../../models").user;
+const Device = require("../../models").device;
+
+function updateDevice(req, userId) {
+    if (!req.body.deviceToken) return;
+    Device.update({ userId: userId }, { where: { uuid: req.body.deviceToken }});
+}
 
 function signup(req, res, next) {
-    if (!req.body.username || !req.body.password) return res.status(401).send({err: "Missing credentials"});
+    if (!req.body.username || !req.body.password || !req.body.deviceToken) return res.status(401).send({err: "Missing credentials"});
     return sign.signup(req, req.body.username, req.body.password, function(err, user, info) {
         if (err) return next(err);
         if (!user) return res.status(401).send(info);
+        updateDevice(req, user.id);
         const token = sign.generateToken(user);
         return res.status(200).send({ success: true, token: token.token, expiresIn: token.expires, user: user });
     });
 }
 
 function signin(req, res, next) {
-    if (!req.body.username || !req.body.password) return res.status(401).send({err: "Missing credentials"});
+    if (!req.body.username || !req.body.password || !req.body.deviceToken) return res.status(401).send({err: "Missing credentials"});
     return sign.signin(req, req.body.username, req.body.password, function(err, user, info) {
         if (err) return next(err);
         if (!user) return res.status(401).send(info);
+        updateDevice(req, user.id);
         const token = sign.generateToken(user);
         return res.status(200).send({ success: true, token: token.token, expiresIn: token.expires, user: user });
     });
@@ -75,7 +83,7 @@ function editImage(req, res) {
     req.user.img = "https://ts3.wondercube.fr/images/profile/" + req.user.username + req.body.ext;
     const name = path.join(path.dirname(require.main.filename), "../images/profile/", req.user.username + req.body.ext);
     writeImage(name, req.body.img);
-    User.update(req.user.dataValues, { where: {id: req.user.id } })
+    User.update(req.user.dataValues, { where: {id: req.user.id} })
     .then((data) => me(req, res))
     .catch((err) => res.status(400).send({error: err}));
 }

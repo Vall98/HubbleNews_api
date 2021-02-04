@@ -18,7 +18,12 @@ function news_release(req, res) {
     });
 }
 
+async function get_last() {
+    return await axios.get(URL + "news_release/last");
+}
+
 module.exports = {
     news,
-    news_release
+    news_release,
+    get_last
 }

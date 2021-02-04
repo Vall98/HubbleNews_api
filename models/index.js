@@ -27,9 +27,12 @@ for(let i = 0; i < databases.length; ++i) {
 
 db['user'].hasMany(db['comment']);
 db['comment'].belongsTo(db['user']);
+
 db['user'].hasMany(db['favorite']);
 db['favorite'].belongsTo(db['user']);
 
+db['user'].hasOne(db['device']);
+db['device'].belongsTo(db['user']);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

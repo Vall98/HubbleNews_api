@@ -3,6 +3,11 @@ const passport = require('../passport');
 const router = require('express').Router();
 
 /*
+** Device
+*/
+router.post('/device/regisertoken', ctrl.deviceController.registerToken);
+
+/*
 ** User
 */
 router.post('/signin', ctrl.userController.signin);
